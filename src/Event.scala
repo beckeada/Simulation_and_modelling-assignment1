@@ -10,7 +10,7 @@ abstract class Event(time: Double) {
 //timeOrdering is for sole purpose of Applying PriorityQueue on Events
 //orders from lowest time to highest
 object timeOrdering extends Ordering[Event] {
-  def ~=(x: Double, y: Double, precision: Double) = {
+  def ~=(x: Double, y: Double, precision: Double): Boolean = {
     if ((x - y).abs < precision) true else false
   }
 
@@ -22,13 +22,13 @@ object timeOrdering extends Ordering[Event] {
     else if (difference > 0) {
       return -1
     }
-    return 1
+    1
   }
 }
 
 
 case class Start(time: Double) extends Event(time) {
-  def print():Unit = println(s"Start: ${time}")
+  def print():Unit = println(s"Start: $time")
 
   def compute(world: World): Unit = {
     //check if possible to initiate
@@ -53,7 +53,7 @@ case class Start(time: Double) extends Event(time) {
         world.addEvent(Termination(zoneLeaveTime + world.time, call))
       }
       else {
-        call.resetPosition
+        call.resetPosition()
         call.substractDuration(zoneLeaveTime)
         world.addEvent(Handover(zoneLeaveTime + world.time, call))
       }
@@ -68,7 +68,7 @@ case class Start(time: Double) extends Event(time) {
 
 
 case class Termination(time: Double, call: Call) extends Event(time) {
-  def print():Unit = println(s"Termination ${time} - ${call.print}")
+  def print():Unit = println(s"Termination $time - ${call.print}")
 
   def compute(world: World): Unit = {
     world.stations(call.station).free(call.handover)
@@ -97,7 +97,7 @@ case class Handover(time: Double, call: Call) extends Event(time) {
         world.addEvent(Termination(zoneLeaveTime + world.time, call))
       }
       else {
-        call.resetPosition
+        call.resetPosition()
         call.substractDuration(zoneLeaveTime)
         world.addEvent(Handover(zoneLeaveTime + world.time, call))
       }

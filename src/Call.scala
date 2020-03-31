@@ -11,8 +11,8 @@ class Call(var station: Int, val speed: Double, var position: Double, var durati
     station
   }
 
-  def setHandover(status: Boolean) = handover = status
+  def setHandover(status: Boolean): Unit = handover = status
 
-  def print:String = s"(${station}, $speed, $position, $duration, $direction, $handover)"
+  def print: String = s"($station, $speed, $position, $duration, $direction, $handover)"
 
 }
