@@ -4,13 +4,13 @@ object RandomGenerator{
  //exponentialy distributed values - Call durations, Inter arrival times
   def getExp(lambda: Double):Double = Math.log(1-generator.nextDouble())/(-lambda)
 
-  def getCallDur:Double = getExp(1/99.83194913549542) +10.003951603252272
+  def getCallDur:Double = getExp(1/99.83194913549542) +10.003951603252272 +10
   /*def getCallDur:Double ={
    val k = Math.log((1-generator.nextDouble())/(-1/99.83194913549542))
    println(s"k: ${k}")
    k/99.83194913549542
   }*/
-  def getInterArrival: Double = getExp(1/1.3696799447838768) /*+ 0.0000251*/
+  def getInterArrival: Double = getExp(1/1.3696799447838768) + 0.0000251
 
   //uniformly distributed values - stations
   def getStation(range: (Int,Int)= (0,19)): Int = generator.nextInt(range._2) + range._1
